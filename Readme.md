@@ -106,3 +106,9 @@ val helloPrint = {
 someOtherFunction(helloPrint)
 someOtherFunction({println("Hi!")})
 ```
+- conditionals
+```
+fun main() {
+    println(1 == 1)
+}
+```

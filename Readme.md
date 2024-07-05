@@ -56,6 +56,7 @@ fun GreetingText(message: String, from : String, modifier: Modifier = Modifier) 
 }
 ```
 -  To align in the center of the screen add a parameter called verticalArrangement set it to Arrangement.Center. You will learn more on the verticalArrangement
+```
 @Composable
 fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
     Column(

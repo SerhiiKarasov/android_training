@@ -206,6 +206,14 @@ open class SmartDevice(val name: String, val category: String) {
 class SmartTvDevice(deviceName: String, deviceCategory: String) :
     SmartDevice(name = deviceName, category = deviceCategory) {
 }
+
+fun main() {
+    var smartDevice: SmartDevice = SmartTvDevice("Android TV", "Entertainment")
+    smartDevice.turnOn()
+    
+    smartDevice = SmartLightDevice("Google Light", "Utility")
+    smartDevice.turnOn()
+}
 ```
 - In a HAS-A relationship, an object can own an instance of another class without actually being an instance of that class itself.
 - an IS-A relationship between the SmartDevice superclass and SmartTvDevice subclass, it means that whatever the SmartDevice superclass can do, the SmartTvDevice subclass can do
@@ -220,5 +228,140 @@ class SmartLightDevice(deviceName: String, deviceCategory: String) :
         brightnessLevel = 0
         println("Smart Light turned off")
     }
+}
+```
+- The syntax to call the method from the superclass starts with a super keyword followed by the . operator, function name, and a set of parentheses.
+- override property
+```
+class SmartTvDevice(deviceName: String, deviceCategory: String) :
+    SmartDevice(name = deviceName, category = deviceCategory) {
+
+    override val deviceType = "Smart TV"
+
+    ...
+}
+```
+- visibility
+- public. Default visibility modifier. Makes the declaration accessible everywhere. The properties and methods that you want used outside the class are marked as public.
+private. Makes the declaration accessible in the same class or source file.
+- private visibility modifier to ensure that another class can't accidentally access them.
+- protected. Makes the declaration accessible in subclasses.
+- The internal modifier is similar to private, but you can access internal properties and methods from outside the class as long as it's being accessed in the same module.
+- example
+```
+open class SmartDevice(val name: String, val category: String) {
+
+    ...
+
+    private var deviceStatus = "online"
+
+    ...
+}
+//or
+open class SmartDevice(val name: String, val category: String) {
+
+    ...
+
+    var deviceStatus = "online"
+        protected set(value) {
+           field = value
+       }
+
+    ...
+}
+//or
+open class SmartDevice protected constructor (val name: String, val category: String) {
+
+    ...
+
+}
+```
+- properties in Kotlin use a backing field to hold their values in memory
+- You can reuse the  code in the setter function with delegates
+- With interfaces, the class implements the interface. The class provides implementation details for the methods and properties declared in the interface. 
+```
+// the angle brackets or the content inside them. They represent generic types 
+class RangeRegulator() : ReadWriteProperty<Any?, Int> {
+
+}
+
+fun main() {
+    ...
+}
+```
+- range check
+```
+class RangeRegulator(
+    initialValue: Int,
+    private val minValue: Int,
+    private val maxValue: Int
+) : ReadWriteProperty<Any?, Int> {
+
+    var fieldData = initialValue
+
+    override fun getValue(thisRef: Any?, property: KProperty<*>): Int {
+        return fieldData
+    }
+
+    override fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
+        if (value in minValue..maxValue) {
+            fieldData = value
+        }
+    }
+}
+...
+class SmartTvDevice(deviceName: String, deviceCategory: String) :
+    SmartDevice(name = deviceName, category = deviceCategory) {
+
+    override val deviceType = "Smart TV"
+
+    private var speakerVolume by RangeRegulator(initialValue = 2, minValue = 0, maxValue = 100)
+
+    private var channelNumber by RangeRegulator(initialValue = 1, minValue = 0, maxValue = 200)
+
+    ...
+
+}
+```
+# lambdas, functions
+- To refer to the function as a value, reassign trickFunction to ::trick.
+```
+fun main() {
+    val trickFunction = ::trick
+}
+
+fun trick() {
+    println("No treats!")
+}
+// or
+fun main() {
+    val trickFunction = trick
+}
+
+val trick = {
+    println("No treats!")
+}
+```
+# return value
+```
+val treat: () -> Unit = {
+    println("Have a treat!")
+}
+```
+- arguments
+```
+fun trickOrTreat(isTrick: Boolean, extraTreat: (Int) -> String): () -> Unit {
+    if (isTrick) {
+        return trick
+    } else {
+        println(extraTreat(5))
+        return treat
+    }
+}
+```
+- short lambda(arguments and return value)
+```
+val coins: (Int) -> String = {
+    "$quantity quarters"
 }
 ```

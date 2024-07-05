@@ -36,3 +36,38 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 -- NOT a nouned preposition: TextFieldWithLink()
 -- NOT an adjective: Bright()
 -- NOT an adverb: Outside()
+
+-  the parent UI elements contain children UI elements, which in turn can contain children UI elements
+-  The three basic, standard layout elements in Compose are Column, Row, and Box composables.
+```
+fun GreetingText(message: String, from : String, modifier: Modifier = Modifier) {
+    Column {
+        Text(
+            text = "Hi, " + message + ", happy birthday!",
+            fontSize = 100.sp,
+            lineHeight = 116.sp,
+        )
+        Text(
+            text = from,
+            fontSize = 36.sp,
+            lineHeight = 116.sp,
+        )
+    }
+}
+```
+-  To align in the center of the screen add a parameter called verticalArrangement set it to Arrangement.Center. You will learn more on the verticalArrangement
+@Composable
+fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier
+    ) {
+        // ...
+    }
+}
+
+```
+- accessing pictures
+```
+val image = painterResource(R.drawable.androidparty)
+```

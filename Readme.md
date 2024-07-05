@@ -72,3 +72,6 @@ fun GreetingText(message: String, from: String, modifier: Modifier = Modifier) {
 ```
 val image = painterResource(R.drawable.androidparty)
 ```
+- to adjust the scale type of the image, which says how to size the image, to make it fullscreen.
+
+There are quite a few ContentScale types available. You use the ContentScale.Crop parameter scaling, which scales the image uniformly to maintain the aspect ratio so that the width and height of the image are equal to, or larger than, the corresponding dimension of the screen.

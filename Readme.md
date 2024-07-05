@@ -112,3 +112,113 @@ fun main() {
     println(1 == 1)
 }
 ```
+- when statement
+```
+fun main() {
+    val trafficLightColor = "Black"
+
+    when (trafficLightColor) {
+        "Red" -> println("Stop")
+        "Yellow" -> println("Slow")
+    }
+}
+```
+- result of if/else statement can be stored in a variable
+```
+fun main() {
+    val trafficLightColor = "Black"
+
+    val message = 
+      if (trafficLightColor == "Red") "Stop"
+      else if (trafficLightColor == "Yellow") "Slow"
+      else if (trafficLightColor == "Green") "Go"
+      else "Invalid traffic-light color"
+
+    println(message)
+}
+```
+# Use nullable variables
+- val favoriteActor = null
+- In Kotlin, there's a distinction between nullable and non-nullable types: Nullable types are variables that can hold null. Non-null types are variables that can't hold null.
+- nullable type, compilation error because access to potentially null object
+```
+  fun main() {
+    var favoriteActor: String? = "Sandra Oh"
+    println(favoriteActor.length)
+}
+```
+- You can use the ?. safe call operator to access methods or properties of nullable variables.
+```
+fun main() {
+    var favoriteActor: String? = "Sandra Oh"
+    println(favoriteActor?.length)
+}
+```
+- You can also use the !! not-null assertion operator to access methods or properties of nullable variables.
+```
+fun main() {
+    var favoriteActor: String? = "Sandra Oh"
+    println(favoriteActor!!.length)
+}
+// or
+fun main() {
+    var favoriteActor: String? = null
+    println(favoriteActor!!.length)
+}
+```
+- The ?: Elvis operator is an operator that you can use together with the ?. safe-call operator. With the ?: Elvis operator, you can add a default value when the ?. safe-call operator returns null.
+```
+fun main() {
+    var favoriteActor: String? = "Sandra Oh"
+
+    val lengthOfName = favoriteActor?.length ?: 0
+
+    println("The number of characters in your favorite actor's name is $lengthOfName.")
+}
+```
+- kotlin oop
+```
+class SmartDevice constructor() {
+    ...
+}
+...
+class SmartDevice(val name: String, val category: String) {
+    var deviceStatus = "online"
+
+    constructor(name: String, category: String, statusCode: Int) : this(name, category) {
+        deviceStatus = when (statusCode) {
+            0 -> "offline"
+            1 -> "online"
+            else -> "unknown"
+        }
+    }
+    ...
+}
+```
+- In the SmartDevice superclass, add an open keyword before the class keyword to make it extendable:
+```
+open class SmartDevice(val name: String, val category: String) {
+    ...
+}
+```
+- inheritence
+```
+class SmartTvDevice(deviceName: String, deviceCategory: String) :
+    SmartDevice(name = deviceName, category = deviceCategory) {
+}
+```
+- In a HAS-A relationship, an object can own an instance of another class without actually being an instance of that class itself.
+- an IS-A relationship between the SmartDevice superclass and SmartTvDevice subclass, it means that whatever the SmartDevice superclass can do, the SmartTvDevice subclass can do
+- override
+```
+class SmartLightDevice(deviceName: String, deviceCategory: String) :
+    SmartDevice(name = deviceName, category = deviceCategory) {
+...
+
+    override fun turnOff() {
+        deviceStatus = "off"
+        brightnessLevel = 0
+        println("Smart Light turned off")
+    }
+}
+```

@@ -1,4 +1,4 @@
-# android studio how to
+# android studio how to, building first app
 - The setContent() function within the onCreate() function is used to define your layout through composable functions. 
 - All functions marked with the @Composable annotation can be called from the setContent() function or from other Composable functions. 
 - @Composable function names are capitalized.
@@ -75,3 +75,34 @@ val image = painterResource(R.drawable.androidparty)
 - to adjust the scale type of the image, which says how to size the image, to make it fullscreen.
 
 There are quite a few ContentScale types available. You use the ContentScale.Crop parameter scaling, which scales the image uniformly to maintain the aspect ratio so that the width and height of the image are equal to, or larger than, the corresponding dimension of the screen.
+- To set children's position within a Row, set the horizontalArrangement and verticalAlignment arguments.
+- For a Column, set the verticalArrangement and horizontalAlignment arguments.
+- For each side of the composable, the padding modifier takes an optional argument that defines the amount of padding.
+
+```
+Modifier.padding(
+    start = 16.dp,
+    top = 16.dp,
+    end = 16.dp,
+    bottom = 16.dp
+)
+```
+- color with the Color class and the color hex code (a hexadecimal way to represent a color in RGB format
+```
+Text("Example", color = Color(0xFF3ddc84))
+```
+- You can also use Spacer composable to make spacing more explicit.
+- TalkBack is the Google screen reader included on Android devices. TalkBack gives you eyes-free control of your device.
+- TalkBack uses the contentDescription parameter to help with the accessibility of the app. If the Image composable is only used for decorative purposes or there's a Text element that describes the Image composable, you can set the contentDescription parameter to null.
+- You can use the Icon composable to add icons from Material Design. You can change the Tint parameter to adjust the icon color to fit the style of your business card.
+- You can experiment with various values of fontSize, textAlign, color, and fontWeight parameters to style your text.
+
+# kotlin basics
+- lambda
+```
+val helloPrint = {
+    println("Hi!")
+}
+someOtherFunction(helloPrint)
+someOtherFunction({println("Hi!")})
+```

@@ -365,3 +365,40 @@ val coins: (Int) -> String = {
     "$quantity quarters"
 }
 ```
+# aidl with java
+- stub from aidl would be generated in java(generated) folder
+- aidl example
+```
+// IAIDLColorInterface.aidl
+package com.training.aidlserver;
+
+// Declare any non-default types here with import statements
+
+interface IAIDLColorInterface {
+    int getColor();
+}
+```
+- from it would be generated a code in stub
+```
+  public int getColor() throws android.os.RemoteException;
+```
+- in order to create an aidl hit new -> aidl
+- in order to create service hit new -> service
+```
+public class AIDLColorService extends Service {
+    public AIDLColorService() {
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binder;
+    }
+
+    private final IAIDLColorInterface.Stub binder = new IAIDLColorInterface.Stub() {
+        @Override
+        public int getColor() throws RemoteException {
+            return Color.Black;
+        }
+    };
+}
+```

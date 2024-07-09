@@ -366,7 +366,14 @@ val coins: (Int) -> String = {
 }
 ```
 # aidl with java
-- stub from aidl would be generated in java(generated) folder
+## creating service apk
+- you may need to add in build.grade(module:app)
+```
+    buildFeatures {
+        aidl true
+    }
+```
+- in order to create an aidl hit new -> aidl
 - aidl example
 ```
 // IAIDLColorInterface.aidl
@@ -378,11 +385,11 @@ interface IAIDLColorInterface {
     int getColor();
 }
 ```
+- stub from aidl would be generated in java(generated) folder
 - from it would be generated a code in stub
 ```
   public int getColor() throws android.os.RemoteException;
 ```
-- in order to create an aidl hit new -> aidl
 - in order to create service hit new -> service
 ```
 public class AIDLColorService extends Service {
@@ -401,4 +408,41 @@ public class AIDLColorService extends Service {
         }
     };
 }
+```
+- update AndroidManifest.xml
+```
+        <service
+            android:name=".AIDLColorService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="AIDLColorService"/>
+            </intent-filter>
+        </service>
+    </application>
+```
+## creating client apk 
+- copy same aidl to the client project
+- but the folder where the aidl is located should be same as a package name(i.e. with server instead of client)
+- in MainActivity.java implement onServiceConnected, onServiceDisconnected
+```
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            iaidlColorInterface=IAIDLColorInterface.Stub.asInterface(iBinder);
+            Log.d("iaidlColorInterface->",iaidlColorInterface+"");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+
+        }
+```
+- in OnCreate() create intent
+```
+        Intent intent = new Intent("AIDLColorService");
+        intent.setPackage("com.training.aidlserver");
+```
+- this will instantiate a server if is not running
+```
+        bindService(intent,mConnection,BIND_AUTO_CREATE);  
 ```
